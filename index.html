@@ -227,6 +227,26 @@
             color: var(--text-secondary);
         }
 
+        /* Section dividers for narrative flow */
+        .manifesto-section-divider {
+            margin: 3em 0 2.5em 0;
+            height: 1px;
+            background: transparent;
+        }
+
+        /* Extra emphasis for ROI section (climax) */
+        .manifesto-roi-section {
+            margin-top: 3.5em;
+        }
+
+        /* Team section closer */
+        .manifesto-team {
+            margin-top: 3em;
+            padding-top: 2.5em;
+            border-top: 1px solid var(--border-color);
+            opacity: 0.9;
+        }
+
         @media (max-width: 768px) {
             .title {
                 font-size: 36px;
@@ -304,6 +324,8 @@
 
         <p>The Arrakis OS integrates seamlessly on top of your legacy stack, driving immediate "Hard-Dollar" value creation without rip-and-replace or multi-year migration. Once fully operational, Arrakis empowers customers to redefine processes from first principles, requiring every other piece of non-critical software to justify its existence.</p>
 
+        <div class="manifesto-section-divider"></div>
+
         <p><strong>Industries:</strong></p>
         <ul>
             <li>Commodity Trading</li>
@@ -321,16 +343,18 @@
             <li>Supply Chain</li>
         </ul>
 
-        <p><strong>ROI:</strong></p>
-        <ul>
-            <li>See Clearly</li>
-            <li>Drive Top-Line Growth</li>
-            <li>Reduce Value Leakage</li>
-            <li>Automate with Confidence</li>
-            <li>Expand Capacity, not Headcount</li>
-        </ul>
+        <div class="manifesto-roi-section">
+            <p><strong>ROI:</strong></p>
+            <ul>
+                <li>See Clearly</li>
+                <li>Drive Top-Line Growth</li>
+                <li>Reduce Value Leakage</li>
+                <li>Automate with Confidence</li>
+                <li>Expand Capacity, not Headcount</li>
+            </ul>
+        </div>
 
-        <p>Based between London and San Francisco, our founding team includes alumni from Palantir, Accel, and G7 Governments, and graduates of Imperial College London, École Polytechnique, Corps des Mines, Mines Paris, and King's College London.</p>
+        <p class="manifesto-team">Based between London and San Francisco, our founding team includes alumni from Palantir, Accel, and G7 Governments, and graduates of Imperial College London, École Polytechnique, Corps des Mines, Mines Paris, and King's College London.</p>
     </div>
 
     <script>
