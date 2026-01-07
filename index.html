@@ -210,9 +210,10 @@
 
         // ASCII Wireframe Globe Animation
         class Globe {
-            constructor(radius = 12) {
+            constructor(radius = 6) {
                 this.radius = radius;
                 this.rotation = 0;
+                // Character aspect ratio ~2:1, so width needs to be 4x radius for circular appearance
                 this.width = radius * 4;
                 this.height = radius * 2 + 1;
             }
@@ -227,14 +228,13 @@
                 };
             }
 
-            getCharacter(x, y, z, isLatLine, isLonLine, isOutline) {
-                if (isOutline) return '*';
+            getCharacter(x, y, z, isLatLine, isLonLine) {
                 if (isLatLine && isLonLine) return '+';
                 if (isLatLine) return '-';
                 if (isLonLine) {
-                    // Use curved characters based on position
-                    if (z < -this.radius * 0.3) return '(';
-                    if (z > this.radius * 0.3) return ')';
+                    // Use curved characters based on z-position
+                    if (z < -this.radius * 0.35) return '(';
+                    if (z > this.radius * 0.35) return ')';
                     return '|';
                 }
                 return ' ';
@@ -248,39 +248,11 @@
                     Array(this.width).fill(-Infinity)
                 );
 
-                // Draw latitude lines (horizontal circles at different heights)
-                for (let lat = -75; lat <= 75; lat += 25) {
-                    const latRad = (lat * Math.PI) / 180;
-                    const circleRadius = this.radius * Math.cos(latRad);
-                    const yPos = this.radius * Math.sin(latRad);
-
-                    for (let angle = 0; angle < 360; angle += 3) {
-                        const angleRad = (angle * Math.PI) / 180;
-                        const x = circleRadius * Math.cos(angleRad);
-                        const z = circleRadius * Math.sin(angleRad);
-                        const y = yPos;
-
-                        const rotated = this.rotateY(x, y, z, this.rotation);
-
-                        const screenX = Math.round(rotated.x + this.width / 2);
-                        const screenY = Math.round(rotated.y + this.height / 2);
-
-                        if (screenX >= 0 && screenX < this.width &&
-                            screenY >= 0 && screenY < this.height) {
-                            if (rotated.z > zBuffer[screenY][screenX] - 0.1) {
-                                zBuffer[screenY][screenX] = rotated.z;
-                                const char = this.getCharacter(rotated.x, rotated.y, rotated.z, true, false, false);
-                                buffer[screenY][screenX] = char;
-                            }
-                        }
-                    }
-                }
-
-                // Draw longitude lines (vertical curves from pole to pole)
-                for (let lon = 0; lon < 180; lon += 30) {
+                // Draw 3 longitude lines
+                for (let lon = 0; lon < 180; lon += 45) {
                     const lonRad = (lon * Math.PI) / 180;
 
-                    for (let lat = -90; lat <= 90; lat += 3) {
+                    for (let lat = -90; lat <= 90; lat += 4) {
                         const latRad = (lat * Math.PI) / 180;
 
                         const x = this.radius * Math.cos(latRad) * Math.cos(lonRad);
@@ -289,24 +261,57 @@
 
                         const rotated = this.rotateY(x, y, z, this.rotation);
 
-                        const screenX = Math.round(rotated.x + this.width / 2);
+                        // Account for character aspect ratio in projection
+                        const screenX = Math.round(rotated.x * 2 + this.width / 2);
                         const screenY = Math.round(rotated.y + this.height / 2);
 
                         if (screenX >= 0 && screenX < this.width &&
                             screenY >= 0 && screenY < this.height) {
                             if (rotated.z > zBuffer[screenY][screenX] - 0.1) {
                                 const currentChar = buffer[screenY][screenX];
-                                const isLatLine = currentChar === '-';
+                                const isLatLine = currentChar === '-' || currentChar === '=';
                                 zBuffer[screenY][screenX] = rotated.z;
-                                const char = this.getCharacter(rotated.x, rotated.y, rotated.z, isLatLine, true, false);
+                                const char = this.getCharacter(rotated.x, rotated.y, rotated.z, isLatLine, true);
                                 buffer[screenY][screenX] = char;
                             }
                         }
                     }
                 }
 
+                // Draw 2 latitude lines
+                for (let lat of [-45, 45]) {
+                    const latRad = (lat * Math.PI) / 180;
+                    const circleRadius = this.radius * Math.cos(latRad);
+                    const yPos = this.radius * Math.sin(latRad);
+
+                    for (let angle = 0; angle < 360; angle += 4) {
+                        const angleRad = (angle * Math.PI) / 180;
+                        const x = circleRadius * Math.cos(angleRad);
+                        const z = circleRadius * Math.sin(angleRad);
+                        const y = yPos;
+
+                        const rotated = this.rotateY(x, y, z, this.rotation);
+
+                        const screenX = Math.round(rotated.x * 2 + this.width / 2);
+                        const screenY = Math.round(rotated.y + this.height / 2);
+
+                        if (screenX >= 0 && screenX < this.width &&
+                            screenY >= 0 && screenY < this.height) {
+                            if (rotated.z > zBuffer[screenY][screenX] - 0.1) {
+                                zBuffer[screenY][screenX] = rotated.z;
+                                const currentChar = buffer[screenY][screenX];
+                                const isLonLine = currentChar === '|' || currentChar === '(' || currentChar === ')';
+                                const char = this.getCharacter(rotated.x, rotated.y, rotated.z, true, isLonLine);
+                                if (currentChar === ' ' || !isLonLine) {
+                                    buffer[screenY][screenX] = char;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 // Draw equator (emphasized)
-                for (let angle = 0; angle < 360; angle += 2) {
+                for (let angle = 0; angle < 360; angle += 3) {
                     const angleRad = (angle * Math.PI) / 180;
                     const x = this.radius * Math.cos(angleRad);
                     const z = this.radius * Math.sin(angleRad);
@@ -314,7 +319,7 @@
 
                     const rotated = this.rotateY(x, y, z, this.rotation);
 
-                    const screenX = Math.round(rotated.x + this.width / 2);
+                    const screenX = Math.round(rotated.x * 2 + this.width / 2);
                     const screenY = Math.round(rotated.y + this.height / 2);
 
                     if (screenX >= 0 && screenX < this.width &&
@@ -326,20 +331,34 @@
                     }
                 }
 
-                // Draw outline circle (perfect circle edge)
-                for (let angle = 0; angle < 360; angle += 1.2) {
+                // Draw circular outline with poles
+                for (let angle = 0; angle < 360; angle += 2) {
                     const rad = (angle * Math.PI) / 180;
                     const x = this.radius * Math.cos(rad);
                     const y = this.radius * Math.sin(rad);
 
-                    const screenX = Math.round(x + this.width / 2);
+                    const screenX = Math.round(x * 2 + this.width / 2);
                     const screenY = Math.round(y + this.height / 2);
 
                     if (screenX >= 0 && screenX < this.width &&
                         screenY >= 0 && screenY < this.height) {
-                        buffer[screenY][screenX] = '*';
+                        // Use parentheses for left/right edges
+                        if (x < -this.radius * 0.9) {
+                            buffer[screenY][screenX] = '(';
+                        } else if (x > this.radius * 0.9) {
+                            buffer[screenY][screenX] = ')';
+                        } else {
+                            buffer[screenY][screenX] = '*';
+                        }
                     }
                 }
+
+                // Add poles
+                const topPoleY = 0;
+                const bottomPoleY = this.height - 1;
+                const centerX = Math.round(this.width / 2);
+                buffer[topPoleY][centerX] = '*';
+                buffer[bottomPoleY][centerX] = '*';
 
                 return buffer.map(row => row.join('')).join('\n');
             }
@@ -350,7 +369,7 @@
             }
         }
 
-        const globe = new Globe(12);
+        const globe = new Globe(6);
         const globeElement = document.getElementById('globe');
 
         function animate() {
