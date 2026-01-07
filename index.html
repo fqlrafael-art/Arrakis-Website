@@ -208,13 +208,69 @@
             manifesto.classList.toggle('expanded');
         });
 
-        // ASCII Globe Animation
+        // ASCII World Map Animation
         class Globe {
-            constructor(radius = 12) {
+            constructor(radius = 14) {
                 this.radius = radius;
                 this.rotation = 0;
                 this.width = radius * 4;
                 this.height = radius * 2 + 1;
+                this.continents = this.defineContinents();
+            }
+
+            defineContinents() {
+                // Define simplified continent shapes (longitude, latitude, size)
+                return {
+                    // North America
+                    northAmerica: [
+                        { lon: -100, lat: 45, points: [[-10,5],[-8,8],[-5,10],[0,10],[5,8],[8,5],[10,0],[8,-5],[5,-8],[0,-10],[-5,-8],[-8,-5],[-10,0]] },
+                        { lon: -95, lat: 35, points: [[-5,5],[-3,7],[0,8],[3,7],[5,5],[6,0],[5,-5],[0,-7],[-5,-5],[-6,0]] },
+                    ],
+                    // South America
+                    southAmerica: [
+                        { lon: -60, lat: -15, points: [[-4,8],[-2,10],[2,10],[4,8],[5,0],[4,-8],[2,-12],[0,-14],[-2,-12],[-4,-8],[-5,0]] },
+                    ],
+                    // Europe
+                    europe: [
+                        { lon: 10, lat: 50, points: [[-5,3],[-3,5],[0,6],[3,5],[5,3],[5,0],[3,-2],[0,-3],[-3,-2],[-5,0]] },
+                    ],
+                    // Africa
+                    africa: [
+                        { lon: 20, lat: 0, points: [[-6,12],[-4,14],[0,16],[4,14],[6,12],[8,8],[10,0],[8,-10],[6,-12],[4,-15],[0,-18],[-4,-15],[-6,-12],[-8,-8],[-8,0],[-6,8]] },
+                    ],
+                    // Asia
+                    asia: [
+                        { lon: 80, lat: 40, points: [[-15,10],[-10,15],[0,18],[10,15],[15,10],[18,5],[20,0],[18,-5],[15,-10],[10,-12],[0,-10],[-10,-8],[-15,-5],[-18,0],[-15,5]] },
+                    ],
+                    // Australia
+                    australia: [
+                        { lon: 135, lat: -25, points: [[-8,5],[-5,7],[0,8],[5,7],[8,5],[10,0],[8,-5],[5,-7],[0,-8],[-5,-7],[-8,-5],[-10,0]] },
+                    ],
+                };
+            }
+
+            isLand(lon, lat) {
+                // Check if a point is on land
+                for (const continent in this.continents) {
+                    for (const region of this.continents[continent]) {
+                        const dLon = lon - region.lon;
+                        const dLat = lat - region.lat;
+
+                        // Simple point-in-polygon check
+                        let inside = false;
+                        const points = region.points;
+                        for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+                            const xi = points[i][0], yi = points[i][1];
+                            const xj = points[j][0], yj = points[j][1];
+
+                            const intersect = ((yi > dLat) !== (yj > dLat))
+                                && (dLon < (xj - xi) * (dLat - yi) / (yj - yi) + xi);
+                            if (intersect) inside = !inside;
+                        }
+                        if (inside) return true;
+                    }
+                }
+                return false;
             }
 
             project(x, y, z) {
@@ -245,9 +301,9 @@
                     Array(this.width).fill(-Infinity)
                 );
 
-                // Draw latitude lines
-                for (let lat = -80; lat <= 80; lat += 40) {
-                    for (let lon = 0; lon < 360; lon += 4) {
+                // Draw continents
+                for (let lat = -70; lat <= 70; lat += 3) {
+                    for (let lon = 0; lon < 360; lon += 3) {
                         const latRad = (lat * Math.PI) / 180;
                         const lonRad = (lon * Math.PI) / 180;
 
@@ -265,37 +321,15 @@
                             screenY >= 0 && screenY < this.height) {
                             if (rotated.z > zBuffer[screenY][screenX]) {
                                 zBuffer[screenY][screenX] = rotated.z;
-                                buffer[screenY][screenX] = lat === 0 ? '=' : '-';
-                            }
-                        }
-                    }
-                }
 
-                // Draw longitude lines
-                for (let lon = 0; lon < 360; lon += 30) {
-                    for (let lat = -90; lat <= 90; lat += 3) {
-                        const latRad = (lat * Math.PI) / 180;
-                        const lonRad = (lon * Math.PI) / 180;
+                                // Calculate actual longitude considering rotation
+                                const actualLon = ((lon - (this.rotation * 180 / Math.PI)) % 360 + 360) % 360;
+                                const adjustedLon = actualLon > 180 ? actualLon - 360 : actualLon;
 
-                        const x = this.radius * Math.cos(latRad) * Math.cos(lonRad);
-                        const y = this.radius * Math.sin(latRad);
-                        const z = this.radius * Math.cos(latRad) * Math.sin(lonRad);
-
-                        const rotated = this.rotateY(x, y, z, this.rotation);
-                        const projected = this.project(rotated.x, rotated.y, rotated.z);
-
-                        const screenX = Math.round(projected.x + this.width / 2);
-                        const screenY = Math.round(projected.y + this.height / 2);
-
-                        if (screenX >= 0 && screenX < this.width &&
-                            screenY >= 0 && screenY < this.height) {
-                            if (rotated.z > zBuffer[screenY][screenX]) {
-                                zBuffer[screenY][screenX] = rotated.z;
-                                const char = buffer[screenY][screenX];
-                                if (char === ' ') {
-                                    buffer[screenY][screenX] = '|';
-                                } else if (char === '-') {
-                                    buffer[screenY][screenX] = '+';
+                                if (this.isLand(adjustedLon, lat)) {
+                                    buffer[screenY][screenX] = '#';
+                                } else {
+                                    buffer[screenY][screenX] = '.';
                                 }
                             }
                         }
@@ -303,7 +337,7 @@
                 }
 
                 // Draw outline circle
-                for (let angle = 0; angle < 360; angle += 2) {
+                for (let angle = 0; angle < 360; angle += 1.5) {
                     const rad = (angle * Math.PI) / 180;
                     const x = this.radius * Math.cos(rad);
                     const y = this.radius * Math.sin(rad);
@@ -313,10 +347,7 @@
 
                     if (screenX >= 0 && screenX < this.width &&
                         screenY >= 0 && screenY < this.height) {
-                        const char = buffer[screenY][screenX];
-                        if (char === ' ' || char === '.') {
-                            buffer[screenY][screenX] = '*';
-                        }
+                        buffer[screenY][screenX] = '*';
                     }
                 }
 
@@ -329,7 +360,7 @@
             }
         }
 
-        const globe = new Globe(12);
+        const globe = new Globe(14);
         const globeElement = document.getElementById('globe');
 
         function animate() {
