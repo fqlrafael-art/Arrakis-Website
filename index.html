@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrakis Technologies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --text-secondary: #999;
+            --accent-color: #fff;
+            --border-color: #333;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #fafafa;
+            --text-color: #1a1a1a;
+            --text-secondary: #666;
+            --accent-color: #000;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.7;
+        }
+
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            z-index: 100;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .globe-container {
+            margin-bottom: 40px;
+            font-size: 14px;
+            line-height: 1.2;
+            letter-spacing: 2px;
+            color: var(--text-color);
+        }
+
+        #globe {
+            white-space: pre;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: normal;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            text-align: center;
+        }
+
+        .title:hover {
+            opacity: 0.7;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .manifesto {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 0 20px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-color);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.6s ease, opacity 0.6s ease, margin 0.6s ease;
+        }
+
+        .manifesto.expanded {
+            max-height: 3000px;
+            opacity: 1;
+            margin: 60px auto;
+        }
+
+        .manifesto p {
+            margin-bottom: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 24px;
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+
+            .header {
+                font-size: 10px;
+            }
+
+            .globe-container {
+                font-size: 10px;
+            }
+
+            .manifesto {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">◐</button>
+
+    <div class="header">San Francisco · London</div>
+
+    <div class="hero">
+        <div class="globe-container">
+            <pre id="globe"></pre>
+        </div>
+
+        <h1 class="title" id="title">ARRAKIS TECHNOLOGIES</h1>
+
+        <p class="subtitle">AI Native Operating System for Mission-Critical Operations</p>
+    </div>
+
+    <div class="manifesto" id="manifesto">
+        <p>Europe is losing industrial velocity. While the rest of the world embraces AI, our most important companies are falling behind—buried under layers of complexity and manual coordination created by the software industrial complex.</p>
+
+        <p>A widening gap exists between Palo Alto and the reality of our physical world. Most of our champions struggle to leverage AI. Arrakis Technologies fills that gap.</p>
+
+        <p>We are an applied AI lab accelerating our customers' highest-value strategic AI initiatives. We don't sell products. We deliver outcomes—working forward-deployed with your teams to unlock your knowledge and engineer your AI unfair advantage.</p>
+
+        <p>Our mission: 10-100x your operators while strengthening our economy by turning industry champions into self-driving AI enterprises.</p>
+
+        <p>We start by enabling human-AI teaming on a shared platform that brings AI leverage to frontline operators, allowing them to focus only on the highest-leverage decisions while AI agents handle heavy lifting across the fabric of the business.</p>
+
+        <p>Over time, the Arrakis OS makes the enterprise progressively self-driving—industrializing decision-making and execution while leveraging every human action to capture the context and logic that fuels further automation and process understanding.</p>
+
+        <p>If we succeed, we will move our economy forward by giving companies an unfair advantage based on a limitlessly scalable resource of AI agents and custom-built software. We will move humanity forward by freeing operators to act only on the most valuable, critical, and complex decisions. And we will move European technology forward by building a sovereign operating system that requires every other piece of software to justify its existence—enabling our customers to redefine processes from first principles.</p>
+
+        <p>Our founding team includes alumni from leading AI and technology institutions including Palantir and Accel, and graduates of Imperial College, Éc</p>
+    </div>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+        });
+
+        // Manifesto toggle
+        const title = document.getElementById('title');
+        const manifesto = document.getElementById('manifesto');
+
+        title.addEventListener('click', () => {
+            manifesto.classList.toggle('expanded');
+        });
+
+        // ASCII Globe Animation
+        class Globe {
+            constructor(radius = 12) {
+                this.radius = radius;
+                this.rotation = 0;
+                this.width = radius * 4;
+                this.height = radius * 2 + 1;
+            }
+
+            project(x, y, z) {
+                // Perspective projection
+                const scale = 200 / (200 + z);
+                return {
+                    x: x * scale,
+                    y: y * scale,
+                    z: z
+                };
+            }
+
+            rotateY(x, y, z, angle) {
+                const cos = Math.cos(angle);
+                const sin = Math.sin(angle);
+                return {
+                    x: x * cos - z * sin,
+                    y: y,
+                    z: x * sin + z * cos
+                };
+            }
+
+            draw() {
+                const buffer = Array(this.height).fill().map(() =>
+                    Array(this.width).fill(' ')
+                );
+                const zBuffer = Array(this.height).fill().map(() =>
+                    Array(this.width).fill(-Infinity)
+                );
+
+                // Draw latitude lines
+                for (let lat = -80; lat <= 80; lat += 40) {
+                    for (let lon = 0; lon < 360; lon += 4) {
+                        const latRad = (lat * Math.PI) / 180;
+                        const lonRad = (lon * Math.PI) / 180;
+
+                        const x = this.radius * Math.cos(latRad) * Math.cos(lonRad);
+                        const y = this.radius * Math.sin(latRad);
+                        const z = this.radius * Math.cos(latRad) * Math.sin(lonRad);
+
+                        const rotated = this.rotateY(x, y, z, this.rotation);
+                        const projected = this.project(rotated.x, rotated.y, rotated.z);
+
+                        const screenX = Math.round(projected.x + this.width / 2);
+                        const screenY = Math.round(projected.y + this.height / 2);
+
+                        if (screenX >= 0 && screenX < this.width &&
+                            screenY >= 0 && screenY < this.height) {
+                            if (rotated.z > zBuffer[screenY][screenX]) {
+                                zBuffer[screenY][screenX] = rotated.z;
+                                buffer[screenY][screenX] = lat === 0 ? '=' : '-';
+                            }
+                        }
+                    }
+                }
+
+                // Draw longitude lines
+                for (let lon = 0; lon < 360; lon += 30) {
+                    for (let lat = -90; lat <= 90; lat += 3) {
+                        const latRad = (lat * Math.PI) / 180;
+                        const lonRad = (lon * Math.PI) / 180;
+
+                        const x = this.radius * Math.cos(latRad) * Math.cos(lonRad);
+                        const y = this.radius * Math.sin(latRad);
+                        const z = this.radius * Math.cos(latRad) * Math.sin(lonRad);
+
+                        const rotated = this.rotateY(x, y, z, this.rotation);
+                        const projected = this.project(rotated.x, rotated.y, rotated.z);
+
+                        const screenX = Math.round(projected.x + this.width / 2);
+                        const screenY = Math.round(projected.y + this.height / 2);
+
+                        if (screenX >= 0 && screenX < this.width &&
+                            screenY >= 0 && screenY < this.height) {
+                            if (rotated.z > zBuffer[screenY][screenX]) {
+                                zBuffer[screenY][screenX] = rotated.z;
+                                const char = buffer[screenY][screenX];
+                                if (char === ' ') {
+                                    buffer[screenY][screenX] = '|';
+                                } else if (char === '-') {
+                                    buffer[screenY][screenX] = '+';
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Draw outline circle
+                for (let angle = 0; angle < 360; angle += 2) {
+                    const rad = (angle * Math.PI) / 180;
+                    const x = this.radius * Math.cos(rad);
+                    const y = this.radius * Math.sin(rad);
+
+                    const screenX = Math.round(x + this.width / 2);
+                    const screenY = Math.round(y + this.height / 2);
+
+                    if (screenX >= 0 && screenX < this.width &&
+                        screenY >= 0 && screenY < this.height) {
+                        const char = buffer[screenY][screenX];
+                        if (char === ' ' || char === '.') {
+                            buffer[screenY][screenX] = '*';
+                        }
+                    }
+                }
+
+                return buffer.map(row => row.join('')).join('\n');
+            }
+
+            update() {
+                // Full rotation every 27 seconds
+                this.rotation += (Math.PI * 2) / (27 * 60);
+            }
+        }
+
+        const globe = new Globe(12);
+        const globeElement = document.getElementById('globe');
+
+        function animate() {
+            globe.update();
+            globeElement.textContent = globe.draw();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
