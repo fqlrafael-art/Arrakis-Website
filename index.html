@@ -14,9 +14,10 @@
         :root {
             --bg-color: #0a0a0a;
             --text-color: #e0e0e0;
-            --text-secondary: #999;
+            --text-secondary: #a8a8a8;
             --accent-color: #fff;
             --border-color: #333;
+            --highlight-color: #b8b8b8;
         }
 
         [data-theme="light"] {
@@ -25,6 +26,11 @@
             --text-secondary: #666;
             --accent-color: #000;
             --border-color: #ddd;
+            --highlight-color: #555;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -59,10 +65,11 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             letter-spacing: 1px;
             z-index: 100;
+            opacity: 0.7;
         }
 
         .hero {
@@ -83,8 +90,8 @@
         }
 
         #globe {
-            width: 210px;
-            height: 210px;
+            width: 240px;
+            height: 240px;
         }
 
         .globe-stroke {
@@ -94,7 +101,7 @@
         }
 
         .longitude-line {
-            animation: pulseLongitude 22s ease-in-out infinite;
+            animation: pulseLongitude 20s ease-in-out infinite;
             transform-origin: center;
         }
 
@@ -103,15 +110,15 @@
         }
 
         .longitude-line:nth-child(2) {
-            animation-delay: -5.5s;
+            animation-delay: -5s;
         }
 
         .longitude-line:nth-child(3) {
-            animation-delay: -11s;
+            animation-delay: -10s;
         }
 
         .longitude-line:nth-child(4) {
-            animation-delay: -16.5s;
+            animation-delay: -15s;
         }
 
         @keyframes pulseLongitude {
@@ -122,6 +129,26 @@
             50% {
                 opacity: 1;
                 transform: scaleX(1);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
             }
         }
 
@@ -144,16 +171,37 @@
 
         .manifesto {
             max-width: 700px;
-            margin: 80px auto;
-            padding: 0 20px 80px 20px;
-            font-size: 14px;
-            line-height: 1.8;
+            margin: 100px auto;
+            padding: 0 20px 100px 20px;
+            font-size: 16px;
+            line-height: 2.0;
             color: var(--text-color);
             text-align: left;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .manifesto p {
-            margin-bottom: 1.5em;
+            margin-bottom: 1.8em;
+        }
+
+        .manifesto strong {
+            color: var(--highlight-color);
+            font-weight: normal;
+            font-size: 15px;
+            letter-spacing: 0.5px;
         }
 
         @media (max-width: 768px) {
@@ -167,8 +215,8 @@
             }
 
             #globe {
-                width: 160px;
-                height: 160px;
+                width: 180px;
+                height: 180px;
             }
 
             .header {
@@ -176,7 +224,14 @@
             }
 
             .manifesto {
-                font-size: 13px;
+                font-size: 15px;
+                line-height: 1.9;
+                margin: 60px auto;
+                padding: 0 20px 60px 20px;
+            }
+
+            .scroll-indicator {
+                bottom: 100px;
             }
         }
     </style>
@@ -213,6 +268,8 @@
             <h1 class="title">ARRAKIS TECHNOLOGIES</h1>
             <p class="subtitle">AI Native Operating System for Mission-Critical Operations</p>
         </div>
+
+        <div class="scroll-indicator">↓</div>
     </div>
 
     <div class="manifesto">
@@ -224,9 +281,11 @@
 
         <p>The Arrakis OS integrates seamlessly on top of your legacy stack, driving immediate "Hard-Dollar" value creation without rip-and-replace or multi-year migration. Once fully operational, Arrakis empowers customers to redefine processes from first principles, requiring every other piece of non-critical software to justify its existence.</p>
 
-        <p><strong>Industries:</strong> Commodity Trading · Technology · Manufacturing · Construction · Defence<br>
-        <strong>Focus areas:</strong> Sales · Procurement · Finance · Supply Chain<br>
-        <strong>ROI:</strong> See Clearly · Drive Top-Line Growth · Reduce Value Leakage · Automate with Confidence · Expand Capacity, not Headcount</p>
+        <p><strong>Industries:</strong> Commodity Trading · Technology · Manufacturing · Construction · Defence</p>
+
+        <p><strong>Focus areas:</strong> Sales · Procurement · Finance · Supply Chain</p>
+
+        <p><strong>ROI:</strong> See Clearly · Drive Top-Line Growth · Reduce Value Leakage · Automate with Confidence · Expand Capacity, not Headcount</p>
 
         <p>Based between London and San Francisco, our founding team includes alumni from Palantir, Accel, and G7 Agencies, and graduates of Imperial College London, École Polytechnique, Corps des Mines, Mines Paris, and King's College London.</p>
     </div>
