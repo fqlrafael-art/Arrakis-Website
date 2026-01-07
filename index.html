@@ -210,10 +210,10 @@
 
         // ASCII Wireframe Globe Animation
         class Globe {
-            constructor(radius = 11) {
+            constructor(radius = 12) {
                 this.radius = radius;
                 this.rotation = 0;
-                this.width = radius * 2.2;
+                this.width = radius * 4;
                 this.height = radius * 2 + 1;
             }
 
@@ -350,7 +350,7 @@
             }
         }
 
-        const globe = new Globe(11);
+        const globe = new Globe(12);
         const globeElement = document.getElementById('globe');
 
         function animate() {
