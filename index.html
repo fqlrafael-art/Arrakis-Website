@@ -76,15 +76,49 @@
 
         .globe-container {
             margin-bottom: 40px;
-            font-size: 14px;
-            line-height: 1.2;
-            letter-spacing: 2px;
-            color: var(--text-color);
         }
 
         #globe {
-            white-space: pre;
-            font-family: 'Courier New', Courier, monospace;
+            width: 140px;
+            height: 140px;
+        }
+
+        .globe-stroke {
+            stroke: var(--text-color);
+            fill: none;
+            stroke-width: 1.2;
+        }
+
+        .longitude-line {
+            animation: pulseLongitude 22s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .longitude-line:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .longitude-line:nth-child(2) {
+            animation-delay: -5.5s;
+        }
+
+        .longitude-line:nth-child(3) {
+            animation-delay: -11s;
+        }
+
+        .longitude-line:nth-child(4) {
+            animation-delay: -16.5s;
+        }
+
+        @keyframes pulseLongitude {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scaleX(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
         }
 
         .title {
@@ -163,7 +197,25 @@
 
     <div class="hero">
         <div class="globe-container">
-            <pre id="globe"></pre>
+            <svg id="globe" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer circle -->
+                <circle cx="70" cy="70" r="65" class="globe-stroke" />
+
+                <!-- Latitude lines (parallels) -->
+                <ellipse cx="70" cy="70" rx="65" ry="20" class="globe-stroke" />
+                <ellipse cx="70" cy="70" rx="65" ry="40" class="globe-stroke" />
+
+                <!-- Equator -->
+                <line x1="5" y1="70" x2="135" y2="70" class="globe-stroke" style="stroke-width: 1.5;" />
+
+                <!-- Longitude lines (meridians) - animated -->
+                <g>
+                    <ellipse cx="70" cy="70" rx="20" ry="65" class="globe-stroke longitude-line" />
+                    <ellipse cx="70" cy="70" rx="40" ry="65" class="globe-stroke longitude-line" />
+                    <ellipse cx="70" cy="70" rx="55" ry="65" class="globe-stroke longitude-line" />
+                    <line x1="70" y1="5" x2="70" y2="135" class="globe-stroke longitude-line" />
+                </g>
+            </svg>
         </div>
 
         <h1 class="title" id="title">ARRAKIS TECHNOLOGIES</h1>
@@ -207,178 +259,6 @@
         title.addEventListener('click', () => {
             manifesto.classList.toggle('expanded');
         });
-
-        // ASCII Wireframe Globe Animation
-        class Globe {
-            constructor(radius = 6) {
-                this.radius = radius;
-                this.rotation = 0;
-                // Character aspect ratio ~2:1, so width needs to be 4x radius for circular appearance
-                this.width = radius * 4;
-                this.height = radius * 2 + 1;
-            }
-
-            rotateY(x, y, z, angle) {
-                const cos = Math.cos(angle);
-                const sin = Math.sin(angle);
-                return {
-                    x: x * cos - z * sin,
-                    y: y,
-                    z: x * sin + z * cos
-                };
-            }
-
-            getCharacter(x, y, z, isLatLine, isLonLine) {
-                if (isLatLine && isLonLine) return '+';
-                if (isLatLine) return '-';
-                if (isLonLine) {
-                    // Use curved characters based on z-position
-                    if (z < -this.radius * 0.35) return '(';
-                    if (z > this.radius * 0.35) return ')';
-                    return '|';
-                }
-                return ' ';
-            }
-
-            draw() {
-                const buffer = Array(this.height).fill().map(() =>
-                    Array(this.width).fill(' ')
-                );
-                const zBuffer = Array(this.height).fill().map(() =>
-                    Array(this.width).fill(-Infinity)
-                );
-
-                // Draw 3 longitude lines
-                for (let lon = 0; lon < 180; lon += 45) {
-                    const lonRad = (lon * Math.PI) / 180;
-
-                    for (let lat = -90; lat <= 90; lat += 4) {
-                        const latRad = (lat * Math.PI) / 180;
-
-                        const x = this.radius * Math.cos(latRad) * Math.cos(lonRad);
-                        const y = this.radius * Math.sin(latRad);
-                        const z = this.radius * Math.cos(latRad) * Math.sin(lonRad);
-
-                        const rotated = this.rotateY(x, y, z, this.rotation);
-
-                        // Account for character aspect ratio in projection
-                        const screenX = Math.round(rotated.x * 2 + this.width / 2);
-                        const screenY = Math.round(rotated.y + this.height / 2);
-
-                        if (screenX >= 0 && screenX < this.width &&
-                            screenY >= 0 && screenY < this.height) {
-                            if (rotated.z > zBuffer[screenY][screenX] - 0.1) {
-                                const currentChar = buffer[screenY][screenX];
-                                const isLatLine = currentChar === '-' || currentChar === '=';
-                                zBuffer[screenY][screenX] = rotated.z;
-                                const char = this.getCharacter(rotated.x, rotated.y, rotated.z, isLatLine, true);
-                                buffer[screenY][screenX] = char;
-                            }
-                        }
-                    }
-                }
-
-                // Draw 2 latitude lines
-                for (let lat of [-45, 45]) {
-                    const latRad = (lat * Math.PI) / 180;
-                    const circleRadius = this.radius * Math.cos(latRad);
-                    const yPos = this.radius * Math.sin(latRad);
-
-                    for (let angle = 0; angle < 360; angle += 4) {
-                        const angleRad = (angle * Math.PI) / 180;
-                        const x = circleRadius * Math.cos(angleRad);
-                        const z = circleRadius * Math.sin(angleRad);
-                        const y = yPos;
-
-                        const rotated = this.rotateY(x, y, z, this.rotation);
-
-                        const screenX = Math.round(rotated.x * 2 + this.width / 2);
-                        const screenY = Math.round(rotated.y + this.height / 2);
-
-                        if (screenX >= 0 && screenX < this.width &&
-                            screenY >= 0 && screenY < this.height) {
-                            if (rotated.z > zBuffer[screenY][screenX] - 0.1) {
-                                zBuffer[screenY][screenX] = rotated.z;
-                                const currentChar = buffer[screenY][screenX];
-                                const isLonLine = currentChar === '|' || currentChar === '(' || currentChar === ')';
-                                const char = this.getCharacter(rotated.x, rotated.y, rotated.z, true, isLonLine);
-                                if (currentChar === ' ' || !isLonLine) {
-                                    buffer[screenY][screenX] = char;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Draw equator (emphasized)
-                for (let angle = 0; angle < 360; angle += 3) {
-                    const angleRad = (angle * Math.PI) / 180;
-                    const x = this.radius * Math.cos(angleRad);
-                    const z = this.radius * Math.sin(angleRad);
-                    const y = 0;
-
-                    const rotated = this.rotateY(x, y, z, this.rotation);
-
-                    const screenX = Math.round(rotated.x * 2 + this.width / 2);
-                    const screenY = Math.round(rotated.y + this.height / 2);
-
-                    if (screenX >= 0 && screenX < this.width &&
-                        screenY >= 0 && screenY < this.height) {
-                        if (rotated.z > zBuffer[screenY][screenX] - 0.1) {
-                            zBuffer[screenY][screenX] = rotated.z;
-                            buffer[screenY][screenX] = '=';
-                        }
-                    }
-                }
-
-                // Draw circular outline with poles
-                for (let angle = 0; angle < 360; angle += 2) {
-                    const rad = (angle * Math.PI) / 180;
-                    const x = this.radius * Math.cos(rad);
-                    const y = this.radius * Math.sin(rad);
-
-                    const screenX = Math.round(x * 2 + this.width / 2);
-                    const screenY = Math.round(y + this.height / 2);
-
-                    if (screenX >= 0 && screenX < this.width &&
-                        screenY >= 0 && screenY < this.height) {
-                        // Use parentheses for left/right edges
-                        if (x < -this.radius * 0.9) {
-                            buffer[screenY][screenX] = '(';
-                        } else if (x > this.radius * 0.9) {
-                            buffer[screenY][screenX] = ')';
-                        } else {
-                            buffer[screenY][screenX] = '*';
-                        }
-                    }
-                }
-
-                // Add poles
-                const topPoleY = 0;
-                const bottomPoleY = this.height - 1;
-                const centerX = Math.round(this.width / 2);
-                buffer[topPoleY][centerX] = '*';
-                buffer[bottomPoleY][centerX] = '*';
-
-                return buffer.map(row => row.join('')).join('\n');
-            }
-
-            update() {
-                // Full rotation every 27 seconds
-                this.rotation += (Math.PI * 2) / (27 * 60);
-            }
-        }
-
-        const globe = new Globe(6);
-        const globeElement = document.getElementById('globe');
-
-        function animate() {
-            globe.update();
-            globeElement.textContent = globe.draw();
-            requestAnimationFrame(animate);
-        }
-
-        animate();
     </script>
 </body>
 </html>
