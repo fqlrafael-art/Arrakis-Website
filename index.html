@@ -152,10 +152,14 @@
             }
         }
 
+        .title-container {
+            padding-bottom: 50px;
+        }
+
         .title {
             font-size: 48px;
             font-weight: normal;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -163,7 +167,7 @@
         .subtitle {
             font-size: 21px;
             color: var(--text-secondary);
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             text-align: center;
             max-width: 900px;
             line-height: 1.4;
@@ -204,7 +208,6 @@
         .manifesto strong {
             color: var(--highlight-color);
             font-weight: normal;
-            font-size: 15px;
             letter-spacing: 0.5px;
         }
 
@@ -258,20 +261,20 @@
         .security-section {
             max-width: 700px;
             margin: 0 auto;
-            padding: 60px 20px 80px 20px;
+            padding: 0 20px 80px 20px;
             text-align: center;
         }
 
         .security-features {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .security-features p {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             line-height: 1.8;
             letter-spacing: 0.5px;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
         .made-in-europe {
@@ -279,22 +282,22 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-secondary);
             letter-spacing: 1px;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         @media (max-width: 768px) {
             .title {
                 font-size: 32px;
-                letter-spacing: 2px;
+                letter-spacing: 2.5px;
                 padding: 0 10px;
             }
 
             .subtitle {
                 font-size: 16px;
-                letter-spacing: 1px;
+                letter-spacing: 0.8px;
                 line-height: 1.5;
                 padding: 0 20px;
             }
@@ -333,26 +336,27 @@
             }
 
             .security-section {
-                padding: 50px 20px 70px 20px;
+                padding: 0 20px 70px 20px;
             }
 
             .security-features p {
-                font-size: 11px;
+                font-size: 10px;
             }
 
             .made-in-europe {
-                font-size: 10px;
+                font-size: 9px;
             }
         }
 
         @media (max-width: 480px) {
             .title {
                 font-size: 24px;
-                letter-spacing: 1.5px;
+                letter-spacing: 2px;
             }
 
             .subtitle {
                 font-size: 14px;
+                letter-spacing: 0.6px;
                 line-height: 1.6;
             }
 
@@ -385,15 +389,15 @@
             }
 
             .security-section {
-                padding: 40px 15px 60px 15px;
+                padding: 0 15px 60px 15px;
             }
 
             .security-features p {
-                font-size: 10px;
+                font-size: 9px;
             }
 
             .made-in-europe {
-                font-size: 10px;
+                font-size: 9px;
             }
         }
     </style>
@@ -426,7 +430,7 @@
             </svg>
         </div>
 
-        <div style="padding-bottom: 50px;">
+        <div class="title-container">
             <h1 class="title">ARRAKIS TECHNOLOGIES</h1>
             <p class="subtitle">AI Native Operating System for Mission-Critical Operations</p>
         </div>
