@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://arrakistechnologies.ai/sitemap.xml
