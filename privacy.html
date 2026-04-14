@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Arrakis Technologies</title>
+    <meta name="description" content="Privacy Policy for Arrakis Technologies — how we collect, use, and protect your personal data.">
+    <link rel="canonical" href="https://arrakistechnologies.ai/privacy">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --text-secondary: #a8a8a8;
+            --accent-color: #fff;
+            --border-color: #333;
+            --highlight-color: #b8b8b8;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #fafafa;
+            --text-color: #1a1a1a;
+            --text-secondary: #666;
+            --accent-color: #000;
+            --border-color: #ddd;
+            --highlight-color: #555;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover { opacity: 0.7; }
+
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            z-index: 100;
+            opacity: 0.7;
+        }
+
+        .content {
+            max-width: 700px;
+            margin: 120px auto 80px auto;
+            padding: 0 20px;
+            font-size: 15px;
+            line-height: 2.0;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: normal;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .effective-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            letter-spacing: 0.5px;
+        }
+
+        h2 {
+            font-size: 13px;
+            font-weight: normal;
+            letter-spacing: 2px;
+            color: var(--highlight-color);
+            margin: 48px 0 16px 0;
+            text-transform: uppercase;
+        }
+
+        p { margin-bottom: 1.4em; }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.4em 0;
+        }
+
+        ul li {
+            padding-left: 1.5em;
+            margin-bottom: 0.5em;
+            position: relative;
+        }
+
+        ul li:before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: var(--text-secondary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.4em;
+            font-size: 13px;
+        }
+
+        th {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        a:hover { opacity: 0.7; }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 48px 0;
+        }
+
+        .footer {
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 32px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 32px;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .footer a:hover { color: var(--text-color); }
+
+        @media (max-width: 768px) {
+            .content { margin: 100px auto 60px auto; font-size: 14px; }
+            h1 { font-size: 18px; }
+            table { font-size: 12px; }
+            td, th { padding: 8px 6px; }
+            .footer { flex-wrap: wrap; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">◐</button>
+    <div class="header">San Francisco · London · Paris</div>
+
+    <div class="content">
+        <h1>PRIVACY POLICY</h1>
+        <p class="effective-date">Effective date: April 14, 2026 · Last updated: April 14, 2026</p>
+
+        <p>This Privacy Policy explains how Arrakis Technologies Ltd. ("Arrakis", "we", "us", or "our") collects, uses, stores, and shares personal data when you visit our website, interact with us, or use our enterprise platform and services.</p>
+
+        <p>We are committed to protecting your privacy and complying with applicable data protection laws, including the UK General Data Protection Regulation (UK GDPR), the EU General Data Protection Regulation (EU GDPR), and other applicable privacy legislation.</p>
+
+        <h2>1. Data Controller</h2>
+        <p>Arrakis Technologies Ltd. is the data controller for personal data processed in connection with our website and marketing activities. For data processed within our enterprise platform on behalf of customers, Arrakis acts as a data processor and the customer organisation is the data controller.</p>
+        <ul>
+            <li>Entity: Arrakis Technologies Ltd.</li>
+            <li>Contact: <a href="mailto:privacy@arrakistechnologies.ai">privacy@arrakistechnologies.ai</a></li>
+        </ul>
+
+        <h2>2. Data We Collect</h2>
+        <p>We collect and process the following categories of personal data:</p>
+
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Examples</th>
+                <th>Source</th>
+            </tr>
+            <tr>
+                <td>Contact & identity</td>
+                <td>Name, work email, job title, company name</td>
+                <td>You (forms, email, meetings)</td>
+            </tr>
+            <tr>
+                <td>Platform usage</td>
+                <td>Login timestamps, feature usage, audit log entries</td>
+                <td>Automatically via platform</td>
+            </tr>
+            <tr>
+                <td>Technical data</td>
+                <td>IP address, browser type, device identifiers</td>
+                <td>Automatically via website/platform</td>
+            </tr>
+            <tr>
+                <td>Communications</td>
+                <td>Email content, meeting notes, support requests</td>
+                <td>You</td>
+            </tr>
+            <tr>
+                <td>Customer data</td>
+                <td>Data uploaded or generated within the platform by customers</td>
+                <td>Customer organisation</td>
+            </tr>
+        </table>
+
+        <p>We do not knowingly collect personal data from individuals under 18 years of age.</p>
+
+        <h2>3. Legal Basis for Processing</h2>
+        <table>
+            <tr>
+                <th>Purpose</th>
+                <th>Legal basis</th>
+            </tr>
+            <tr>
+                <td>Providing the platform and services</td>
+                <td>Contract performance (Art. 6(1)(b) GDPR)</td>
+            </tr>
+            <tr>
+                <td>Account management and security</td>
+                <td>Contract performance; Legitimate interests</td>
+            </tr>
+            <tr>
+                <td>Marketing and communications</td>
+                <td>Consent (Art. 6(1)(a)) or Legitimate interests (Art. 6(1)(f))</td>
+            </tr>
+            <tr>
+                <td>Compliance and legal obligations</td>
+                <td>Legal obligation (Art. 6(1)(c))</td>
+            </tr>
+            <tr>
+                <td>Security monitoring and fraud prevention</td>
+                <td>Legitimate interests (Art. 6(1)(f))</td>
+            </tr>
+            <tr>
+                <td>Analytics and service improvement</td>
+                <td>Legitimate interests (Art. 6(1)(f))</td>
+            </tr>
+        </table>
+
+        <h2>4. How We Use Your Data</h2>
+        <ul>
+            <li>Providing, maintaining, and improving our platform and services</li>
+            <li>Managing your account and responding to support requests</li>
+            <li>Sending service notifications and product updates</li>
+            <li>Complying with legal and regulatory obligations</li>
+            <li>Security monitoring, fraud prevention, and audit logging</li>
+            <li>Sending marketing communications where you have opted in or we have a legitimate interest</li>
+        </ul>
+
+        <h2>5. Data Sharing & Recipients</h2>
+        <p>We do not sell personal data. We may share personal data with:</p>
+        <ul>
+            <li><strong>Service providers</strong> — cloud infrastructure (AWS), analytics, CRM, and support tools acting as data processors under appropriate agreements</li>
+            <li><strong>Professional advisers</strong> — lawyers, auditors, and insurers under confidentiality obligations</li>
+            <li><strong>Regulators and authorities</strong> — where required by applicable law or legal process</li>
+            <li><strong>Business transfers</strong> — in connection with a merger, acquisition, or sale of assets, with appropriate notice</li>
+        </ul>
+
+        <h2>6. International Data Transfers</h2>
+        <p>We operate infrastructure in the United States, United Kingdom, and European Union (France, Germany). Where personal data is transferred outside the UK or EEA, we ensure appropriate safeguards are in place, including:</p>
+        <ul>
+            <li>Standard Contractual Clauses (SCCs) approved by the European Commission</li>
+            <li>UK International Data Transfer Agreements (IDTAs) where applicable</li>
+            <li>Adequacy decisions where recognised by the relevant supervisory authority</li>
+        </ul>
+
+        <h2>7. Data Retention</h2>
+        <table>
+            <tr>
+                <th>Data type</th>
+                <th>Retention period</th>
+            </tr>
+            <tr>
+                <td>Account and contract data</td>
+                <td>Duration of contract + 7 years</td>
+            </tr>
+            <tr>
+                <td>Platform audit logs</td>
+                <td>12 months (rolling)</td>
+            </tr>
+            <tr>
+                <td>Marketing contact data</td>
+                <td>Until withdrawal of consent or 3 years from last interaction</td>
+            </tr>
+            <tr>
+                <td>Support communications</td>
+                <td>3 years from closure of request</td>
+            </tr>
+            <tr>
+                <td>Customer data (platform)</td>
+                <td>As specified in MSA; deleted within 30 days of contract termination upon request</td>
+            </tr>
+            <tr>
+                <td>Website technical logs</td>
+                <td>90 days</td>
+            </tr>
+        </table>
+
+        <h2>8. Your Rights</h2>
+        <p>Under UK and EU GDPR, you have the following rights:</p>
+        <ul>
+            <li><strong>Access</strong> — request a copy of personal data we hold about you</li>
+            <li><strong>Rectification</strong> — request correction of inaccurate or incomplete data</li>
+            <li><strong>Erasure</strong> — request deletion of your personal data ("right to be forgotten")</li>
+            <li><strong>Restriction</strong> — request that we limit how we process your data</li>
+            <li><strong>Portability</strong> — receive your data in a structured, machine-readable format</li>
+            <li><strong>Objection</strong> — object to processing based on legitimate interests or for direct marketing</li>
+            <li><strong>Withdraw consent</strong> — withdraw consent at any time where processing is consent-based</li>
+        </ul>
+        <p>To exercise any of these rights, contact us at <a href="mailto:privacy@arrakistechnologies.ai">privacy@arrakistechnologies.ai</a>. We will respond within 30 days. You also have the right to lodge a complaint with your local supervisory authority (e.g. ICO in the UK, CNIL in France).</p>
+
+        <h2>9. Security</h2>
+        <p>We implement appropriate technical and organisational measures to protect personal data against unauthorised access, disclosure, alteration, or destruction. These include AES-256 encryption at rest, TLS in transit, role-based access control, multi-factor authentication, and continuous security monitoring. Further details are available on our <a href="/security">Security page</a>.</p>
+
+        <h2>10. Cookies</h2>
+        <p>Our website uses minimal cookies necessary for basic functionality and security. We do not currently use advertising or tracking cookies. If this changes, we will update this policy and obtain any required consent.</p>
+
+        <h2>11. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy periodically. Material changes will be communicated via email or a prominent notice on our website with at least 30 days advance notice where feasible. The effective date at the top of this page reflects the most recent revision.</p>
+
+        <h2>12. Contact Us</h2>
+        <p>For privacy-related enquiries, data subject requests, or to reach our data protection point of contact:</p>
+        <ul>
+            <li>Email: <a href="mailto:privacy@arrakistechnologies.ai">privacy@arrakistechnologies.ai</a></li>
+            <li>Arrakis Technologies Ltd., London, United Kingdom</li>
+        </ul>
+
+        <hr class="divider">
+    </div>
+
+    <div class="footer">
+        <a href="/">Home</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/security">Security</a>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            html.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>
