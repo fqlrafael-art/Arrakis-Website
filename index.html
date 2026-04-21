@@ -275,6 +275,45 @@
             opacity: 0.9;
         }
 
+        /* Contact section */
+        .contact-section {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+            text-align: center;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            opacity: 0.8;
+        }
+
+        .contact-details {
+            font-size: 14px;
+            line-height: 1.9;
+            color: var(--text-color);
+            letter-spacing: 0.5px;
+        }
+
+        .contact-details a {
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .contact-details a:hover {
+            opacity: 0.7;
+            border-bottom-color: var(--text-color);
+        }
+
+        .contact-address {
+            margin-bottom: 12px;
+        }
+
         /* Security section */
         .security-section {
             max-width: 700px;
@@ -345,6 +384,19 @@
             .security-features p {
                 font-size: 12px;
             }
+
+            .contact-section {
+                padding: 0 20px 50px 20px;
+            }
+
+            .contact-label {
+                font-size: 11px;
+                letter-spacing: 2.5px;
+            }
+
+            .contact-details {
+                font-size: 13px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -394,6 +446,21 @@
 
             .security-features p {
                 font-size: 11px;
+            }
+
+            .contact-section {
+                padding: 0 15px 40px 15px;
+            }
+
+            .contact-label {
+                font-size: 10px;
+                letter-spacing: 2px;
+                margin-bottom: 18px;
+            }
+
+            .contact-details {
+                font-size: 12px;
+                line-height: 1.8;
             }
         }
     </style>
@@ -475,6 +542,20 @@
         <p class="manifesto-team">We are scientists, engineers, and builders who've built enterprise AI systems at Palantir, DeliveryHero, LiveRamp and Mail.ru, backed breakout companies at Accel, and designed national-scale mission-critical infrastructure for G7 governments.</p>
     </div>
 
+    <div class="contact-section" id="contact">
+        <div class="contact-label">CONTACT</div>
+        <div class="contact-details">
+            <div class="contact-address">
+                B1 Vantage Park, Old Gloucester Road<br>
+                Hambrook, Bristol, BS16 1GW<br>
+                United Kingdom
+            </div>
+            <div class="contact-phone">
+                <a href="tel:+447533551184">+44 7533 551184</a>
+            </div>
+        </div>
+    </div>
+
     <div class="security-section">
         <div class="security-features">
             <p>SOC2 & ISO27001 (Pending) · RBAC & Audit Logs · AES-256 Encryption</p>
@@ -503,7 +584,15 @@
         "url": "https://arrakistechnologies.ai",
         "description": "Human-Governed AI Automation for the Enterprise. Deploy AI agents to expand execution capacity across Energy, Manufacturing, Construction, and Defense.",
         "foundingDate": "2025-09-26",
+        "telephone": "+447533551184",
         "address": [
+            {
+                "@type": "PostalAddress",
+                "streetAddress": "B1 Vantage Park, Old Gloucester Road, Hambrook",
+                "addressLocality": "Bristol",
+                "postalCode": "BS16 1GW",
+                "addressCountry": "GB"
+            },
             {"@type": "PostalAddress", "addressLocality": "San Francisco", "addressCountry": "US"},
             {"@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB"},
             {"@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR"}
